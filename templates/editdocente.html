@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block title %} Editar Docente {{ datos.Nombre }} {% endblock %}
+{% load bootstrap %}
+{% block content %}
+<div class="container-fluid">
+		<!-- Page Heading -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    Lista de Docentes
+                    <small></small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li>
+                        <i class="fa fa-dashboard"></i> <a href="/">Dashboard</a>
+                    </li>
+                    <li>
+                    	<i class="fa fa-coffee"><a href="/Docentes/"> Docentes</a></i>
+                    </li>
+                    <li class="active">
+                    	<i class="fa fa-edit"></i> Editar
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <!-- /.row -->
+        <div class="row">
+		<form class="form" method="post" style="padding: 10px;">{% csrf_token %}
+			<div class="form-group">
+				<label class="control-label" for="id_Nombre">Nuevo Nombre: </label>
+					<input type="text" name="Nombre" id="id_Nombre" value="{{datos.Nombre}}" class="form-control">
+			</div>
+			<div class="form-group">
+				<label class="control-label" for="id_Apellido">Apellido: </label>
+					<input type="text" name="Nombre" id="id_Apellido" value="{{datos.Apellido}}" class="form-control">
+			</div> 
+			<div class="form-group">
+				<label class="control-label" for="id_Especialidad">Especialidad: </label>
+					{{form.Especialidad}}
+			</div>
+			<div class="form-group">
+				<label class="control-label" for="id_Nombre">Nuevo Telefono: </label>
+					<input type="text" name="Telefono" id="id_Telefono" value="{{datos.Telefono}}" class="form-control">
+			</div>
+			<div class="form-group">
+				<label class="control-label" for="id_Informacion_adicional">Informacion adicional: </label>
+				<input type="text" name="Informacion_adicional" id="id_Informacion_adicional" value="{{datos.Informacion_adicional}}" class="form-control">
+			</div>
+			<div class="form-group">
+			<label>Agregar nueva imagen</label>
+				{{form.Foto}}
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-3" for="id_Activo" >Profesor activo</label>
+				{{form.Activo}}
+			</div>
+		<input type="submit" name="send" value="Editar" class="btn btn-danger col-sm-offset-5">
+		</form>
+	</div>
+</div>
+{% endblock %}

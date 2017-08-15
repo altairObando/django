@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block title %} Solicitudes {% endblock %}
+{% block content %}
+
+<div class="container-fluid">
+	<div class="row" >
+		<div class="col-lg-12">
+            <h1 class="page-header">
+                SPP
+                <small> Revision</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-dashboard"></i><a href="/"> Dashboard</a>
+                </li>
+                <li>
+                    <i class="fa fa-tags"></i> <a href="/Solicitudes/"> Solicitudes</a>
+                </li>
+                <li>
+                	<i class="fa fa-clock-o"></i> Revisar solicitud 
+                </li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+    	<p>
+            Numero de solicitud: <strong>{{data.id}}</strong> 
+        </p>
+        <p>Docente: <strong>{{data.Docente}}</strong> </p>
+        <p>El dia <strong>{{data.Fecha_solicitud}}</strong></p>
+        <p>
+            Esta solicitud de proyector se encuentra
+            {% if estado  %}
+                <strong>"{{data.Estado}}"</strong>
+            {%else%}
+                Pendiente
+            {%endif%}
+        </p>
+    </div>
+    <div class="row">
+        {% if estado.id == 1 or estado.id == 3 %} <!-- Si esta pendiente  o aprobado -->            
+            <a href="/Prestamo/{{data.id}}/" class="btn btn-primary">Registrar Prestamo</a>
+            <a href="/Anular/{{data.id}}/" class="btn btn-warning">Marcar como Anulada</a>
+            <!-- <a href="/SPP/Prestamo/{{data.id}}/" class="btn btn-danger">Editar Solicitud</a> -->
+        {% elif estado.id == 4 %} <!-- Si esta prestado -->
+            <a href="/Prestamo/{{data.id}}/" class="btn btn-success">Registrar Devolucion</a>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

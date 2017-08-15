@@ -1,0 +1,93 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{% block title %}{% endblock %}</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Noel Antonio Obando">
+    <link rel="icon" type="image/png" href="{% static 'img/escudo.png' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-theme.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/sb-admin.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/plugins/morris.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'font-awesome/css/font-awesome.min.css' %}">
+</head>
+<body>
+	<div class="wrapper">
+		{% include "navbar.html" %}
+        <div id="wrapper">
+            <div id="page-wrapper">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+
+<div id="footer">
+    <div class="container-fluid">
+        <div class="row">
+            <br>
+              <div class="col-md-4">
+                <center>
+                  <img src="{% static 'img/python.png' %}" class="img-circle" alt="the-brains">
+                  <br>
+                  <h4 class="footertext">Python</h4>
+                  <p class="footertext">Este sitio esta escrito en Django + MySQL 5.7</p>.<br>
+                </center>
+              </div>
+              <div class="col-md-4">
+                <center>
+                  <img src="{% static 'img/developer.png' %}" class="img-circle" alt="...">
+                  <br>
+                  <h4 class="footertext">Administrador</h4>
+                  <p class="footertext">Puedes contactar al administrador si tienes dudas :)<br>
+                </center>
+              </div>
+              <div class="col-md-4">
+                <center>
+                  <img src="{% static 'img/escudo.png' %}" class="img-circle" alt="Visitar el sitio web de la unan" width="64" height="64">
+                  <br>
+                  <h4 class="footertext">UNAN - Managua</h4>
+                  <p class="footertext"><a href="http://www.unan.edu.ni/" style="color: white;">Visitar el sitio web de la unan</a><br>
+                </center>
+              </div>
+            </div>
+            <div class="row">
+            <p><center><a href="https://docs.google.com/forms/d/e/1FAIpQLScBHzrXNlLcNZ0niHk69LZDLTbaulCt_hEoEB_8frhIkO3yKA/viewform?usp=sf_link">Aqui envias tus inquietudes </a> <p class="footertext">Copyright 2017</p></center></p>
+        </div>
+    </div>
+</div>
+</html>
+<style type="text/css">
+    .footertext{
+        color: white;
+    }
+    #footer{
+        padding-left: 20%;
+    }
+</style>
+<script src="{% static 'js/jquery-3.2.1.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+{%if perms.staff %}
+<script src="{% static 'js/plugins/morris/raphael.min.js' %}"></script>
+<script src="{% static 'js/plugins/morris/morris.min.js' %}"></script>
+<script >
+new  Morris.Donut({
+        element: 'estadisticas',
+        data: [{
+            label: "Solicitudes Recibidas",
+            value: {{f1}}
+        }, {
+            label: "Prestamos Realizados",
+            value: {{f2}}
+        }, {
+            label: "Devoluciones Concluidas",
+            value: {{f3}}
+        }],
+        resize: true
+    });
+</script>
+{% endif %}

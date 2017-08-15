@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load bootstrap %}
+{% block title %} Registrar Devolucion {% endblock %}
+{% block content %}
+<div class="container-fluid">
+	<div class="row" >
+		<div class="col-lg-12">
+            <h1 class="page-header">
+                SPP
+                <small></small>
+            </h1>
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-dashboard"></i><a href="/">Dashboard</a>
+                </li>
+                <li>
+                    <i class="fa fa-asterisk"></i> <a href="Devoluciones/">Devoluciones</a>
+                </li>
+                <li class="active">
+                	<i class="fa fa-plus"></i> Registrar Devolucion
+                </li>
+            </ol>
+        </div>
+    </div>
+    <div class="row"> <!-- Representacion de los datos -->
+        <div class="col-lg-12">
+            {% if data %}
+        <legend>Datos del Prestamo </legend>
+        <h4><small> Numero de solicitud: </small>{{data.Solicitud.id}}</h4>
+        <h4><small> Docente: </small>{{data.Solicitud.Docente}}</h4>
+        <h4><small> Proyector: </small>{{data.Solicitud.Proyector_solicitado}}</h4>
+        <h4><small> Fecha de prestamo: </small>{{data.Solicitud.Fecha_solicitud}}</h4>
+        <form method="post" class="form">{% csrf_token %}
+            <div class="form-group">
+                <label for="id_Observacion" class="control-label col-sm-4">Observaciones: </label>
+                <div class="col-sm-12">
+                    {{form.Observacion}}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="id_Daniado" class="control-label col-sm-2">Esta dañado? </label>
+                <div class="col-sm-4">
+                    <input type="checkbox" id="id_Daniado" name="Daniado">
+                </div>
+            </div>
+            <div class="form-group col-sm-12">
+                <input type="submit" class="btn btn-success" value="Registrar Devolucion">
+            </div>
+        </form>
+            {% if form.errors %}
+                {{form.errors}}
+            {% endif %}
+        {% else %}
+            <form method="post"> {% csrf_token %}
+                {{form|bootstrap}}
+            </form>
+        {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

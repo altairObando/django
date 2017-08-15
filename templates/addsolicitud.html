@@ -1,0 +1,93 @@
+{% extends 'base.html' %} {% load bootstrap %}
+{%block title %}Solicitud de prestamo {% endblock %}
+{% block content%}
+<div class="container-fluid">
+	<div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">
+                Registrar una nueva solicitud
+                <small>Complete todos los campos</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-dashboard"></i><a href="/"> Dashboard</a>
+                </li>
+                <li>
+                    <i class="fa fa-tags"></i><a href="/Solicitudes/"> Solicitudes</a>
+                </li>
+                <li class="active">
+                    <i class="fa fa-plus"></i> Registrar Solicitud
+                </li>
+            </ol>
+        </div>
+    </div>
+    <!-- Contenido -->
+    <div class="row">
+    	<div class="col-lg-12">
+    		<form method="POST" class="form-horizontal" name="formDocente"> {% csrf_token %}
+    			<div class="form-group">
+                    <label class="control-label col-sm-2" for="id_Docente">Codigo docente</label>
+                    <div class="col-sm-2">
+                        {{form.Docente}}
+                    </div>
+                    <button type="button" name="buscar" value="Buscar" onclick="PopUp(1)" class="btn btn-default">
+                        <i class="glyphicon glyphicon-search"></i>
+                    </button>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="id_Objeto_solicitado"> Codigo Proyector </label>
+                    <div class="col-sm-2">
+                        {{form.Objeto_solicitado}}
+                    </div>
+                    <button type="button" name="buscar" value="Buscar" onclick="PopUp(2)" class="btn btn-default">
+                        <i class="glyphicon glyphicon-search"></i>
+                    </button>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="id_Asignatura">Codigo Asignatura: </label>
+                    <div class="col-sm-2">
+                        {{form.Asignatura}}
+                    </div>
+                    <button type="button" name="buscar" value="Buscar" onclick="PopUp(3)" class="btn btn-default">
+                        <i class="glyphicon glyphicon-search"></i>
+                    </button>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="id_Fecha">Fecha: </label>
+                    <div class="col-sm-4">
+                        {{form.Fecha}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="id_Hora">Hora: </label>
+                    <div class="col-sm-4">
+                        {{form.Hora}}
+                    </div>
+                </div>
+                <input type="submit" value="Agregar" class="btn btn-primary col-sm-offset-5"></input>
+                {{form.errors}}
+    		</form>
+    	</div>
+    </div>
+</div>
+<script type="text/javascript">
+    function PopUp(id)
+    {
+        var posX;
+        var posY;
+        posX = (screen.width/2) - 400;
+        posY = (screen.height/2) - 300;
+        var conf = "width=800, height=300,menubar=no,scrollbars=yes,toolbar=no,location=no, directories=no,resizable=yes, left="+posX+",top="+posY+""
+        if (id==1)
+        {
+            window.open("/PopDocentes/","Buscar",conf );
+        } else{
+            if (id==2) {
+                window.open("/PopProyector/","", conf);
+            } else {
+                window.open("/PopAsignatura/","", conf);
+            }
+        }
+    }
+</script>
+{% endblock %}

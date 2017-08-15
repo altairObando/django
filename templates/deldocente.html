@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block title %} Eliminar Docente {% endblock %}
+{% block content %}
+
+<div class="container-fluid">
+	<div class="row" >
+		<div class="col-lg-12">
+            <h1 class="page-header">
+                SPP
+                <small>Eliminar un Docente</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-dashboard"></i><a href="/"> Dashboard</a>
+                </li>
+                <li>
+                    <i class="fa fa-table"></i> <a href="/Docentes/"> Docentes</a>
+                </li>
+                <li class="active">
+                    <i class="fa fa-ban"></i> Eliminar 
+                </li>
+            </ol>
+        </div>
+    </div>
+	<div class="panel-danger">
+		<div class="panel-heading">
+			Aviso!
+		</div>
+		<div class="panel-body">
+			<div class="alert alert-warning">
+				Se procedera a eliminar el Docente: <strong>{{datos}} {{datos.Apellido}}</strong>
+			</div>
+			<form class="form-horizontal" method="POST"> {% csrf_token %}
+				<input type="submit" name="delete" value="Eliminar del sistema"
+					class="btn btn-danger" 
+				>
+			</form>
+			<form method="GET" action="/Proyectores" style="margin-top: 10px" class="form-horizontal">
+				<input type="submit" value="Regresar" class="btn btn-default">
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}
