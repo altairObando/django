@@ -31,8 +31,8 @@ def Home(request):
 def tablas(request):
 	pro = Proyector.objects.all()
 	sol = Solicitud.objects.all()
-	doc = Docente.objects.all()	
-	return render(request, 'Tablas.html', {
+	doc = Docente.objects.all()
+	return render(request, 'tablas.html', {
 		'doc': doc[:10], 'cantd': doc.count(),
 		'pro': pro[:10], 'cantp': pro.count(),
 		'sol': sol[:10], 'cants': sol.count()
@@ -40,7 +40,7 @@ def tablas(request):
 
 def viewProyector(request):
 	proyectores = Paginador(request, Proyector.objects.filter(estado=True).order_by("Marca", "Modelo"), 10)
-	return render(request, "Proyectores.html", {"pro": proyectores})
+	return render(request, "proyectores.html", {"pro": proyectores})
 
 @login_required(redirect_field_name='Loggin/')
 def addProyector(request):
@@ -53,7 +53,7 @@ def addProyector(request):
 			return redirect(viewProyector)
 	else:
 		form = frmProyectores()
-	return render(request,'addProyector.html', {'form': form})
+	return render(request,'addproyector.html', {'form': form})
 
 @login_required()
 def editarProyector(request, idProyector):
@@ -85,14 +85,14 @@ def deleteProyector(request, idProyector):
 			pro.save()
 			return redirect(viewProyector)
 		else:
-			return render(request, 'delProyector.html', {'pro': pro})
+			return render(request, 'delproyector.html', {'pro': pro})
 	except ValueError:
 		return HttpResponse("No se pudo obtener el identificador correcto")
 
 @login_required()
 def viewDocentes(request):
 	docentes = Paginador(request, Docente.objects.filter(Activo=True).order_by("Nombre"), 10)
-	return render(request, "Docentes.html", {"docs": docentes})
+	return render(request, "docentes.html", {"docs": docentes})
 
 @login_required()
 def addDocente(request):
@@ -103,7 +103,7 @@ def addDocente(request):
 			return redirect(viewDocentes)
 	else:
 		form = frmDocentes()
-	return render(request, 'addDocente.html', {'form': form})
+	return render(request, 'adddocente.html', {'form': form})
 @login_required()
 def editDocente(request, idDoc):
 	try:
@@ -116,7 +116,7 @@ def editDocente(request, idDoc):
 				return redirect(viewDocentes)
 		else:
 			form = frmDocentes2()
-		return render(request, 'editDocente.html', {'form': form, 'datos': eDoc})
+		return render(request, 'editdocente.html', {'form': form, 'datos': eDoc})
 	except Exception as e:
 		raise e
 		return HttpResponse(str(e))
@@ -130,7 +130,7 @@ def delDocente(request, idDoc):
 			docente.save()
 			return redirect(viewDocentes)
 		else:
-			return render(request,'delDocente.html', {'datos': docente})
+			return render(request,'deldocente.html', {'datos': docente})
 	except ValueError:
 		return HttpResponse("No se pudo obtener el identificador correcto")
 @login_required()
@@ -148,11 +148,11 @@ def viewSolicitud(request):
 					errors = False
 				else:
 					errors = True
-				return render(request, 'Solicitudes.html', {"sol":solicitudes, "form":select, "errors": errors})
+				return render(request, 'solicitudes.html', {"sol":solicitudes, "form":select, "errors": errors})
 		else:
 			form = selectEstados()
 			solicitudes = Paginador(request,Solicitud.objects.all().order_by("Fecha_solicitud"), 10)
-		return render(request, 'Solicitudes.html', {"sol": solicitudes, "form":form})
+		return render(request, 'solicitudes.html', {"sol": solicitudes, "form":form})
 	except Exception as e:
 		return HttpResponse("%s %s" %(e, "\nLa pagina solicitada no esta disponible :c"))
 @login_required()
@@ -177,7 +177,7 @@ def addSolicitud(request):
 				return redirect(viewSolicitud)
 		else:
 			form = Solicitudes()
-		return render(request, 'addSolicitud.html', {"form":form})
+		return render(request, 'addsolicitud.html', {"form":form})
 	except Exception as e:
 		return HttpResponse(e)
 
@@ -192,7 +192,7 @@ def reviewSolicitud(request, idSol):
 			extra = Prestamo.objects.get(Solicitud= query)
 		elif est.id == 2:
 			extra = Anulacion.objects.get(Solicitud= query)
-		return render(request,"view.html", {"data":query,"estado":est, 'info': extra})	
+		return render(request,"view.html", {"data":query,"estado":est, 'info': extra})
 	except Exception, e:
 		return HttpResponse(e)
 def anular(request, idSol):
@@ -248,7 +248,7 @@ def addPrestamo(request, idsolicitud):
 				return redirect(viewSolicitud)
 		else:
 			form = frmPrestamo()
-		return render(request,"addPrestamo.html", {"form":form,"data":sol, "Disp": c, "Solicitudes": Solicitud.objects.exclude(Estado=Estado.objects.get(Desc__icontains="Prestado"))})
+		return render(request,"addprestamo.html", {"form":form,"data":sol, "Disp": c, "Solicitudes": Solicitud.objects.exclude(Estado=Estado.objects.get(Desc__icontains="Prestado"))})
 	except Exception as e:
 		return HttpResponse(e)
 @login_required()
@@ -270,7 +270,7 @@ def fullPrestamo(request):
 					Estado = Estado.objects.get(Desc__icontains="Pendiente")
 					)
 				nSolicitud.save()
-				
+
 				ux = User.objects.get(username__icontains=request.session["Usuario"])
 				nprestamo = Prestamo(
 					Solicitud = nSolicitud,
